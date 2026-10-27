@@ -105,3 +105,40 @@ def given_name_match(a: str, b: str) -> float:
         if sa in sk and sb in sk:
             return 0.95
     return min(0.8, similarity(a, b))
+
+
+_ALT = {"c": ["c", "cz", "ts"], "h": ["h", "ch", "kh"], "i": ["i", "y"], "k": ["k", "ck"], "o": ["o", "ó"],
+        "s": ["s", "ś", "sz", "sh"], "u": ["u", "ú"], "v": ["v", "w"], "z": ["z", "ż", "zh"]}
+_ALT_END = {"V": ["ów", "ow", "iv", "iw", "yv", "ev", "ew"], "SK": ["ski", "sky", "skyj", "skyi", "ska", "ськ"]}
+
+
+def query_variants(surname: str, limit: int = 120) -> list[str]:
+    """Правдоподібні написання прізвища для пошуку в індексах, що шукають лише точний збіг.
+
+    Із «скелета» прізвища підставляються типові альтернативи (i/y, h/ch/kh, s/ś/sz, -ów/-ow/-iv/...).
+    Приклад: «Михаськів» → ... «Mychaszkow», «Michaśków», «Mykhaskiv» (див. tests). Результат — кандидати для запитів, не доказ.
+    """
+    sk = skeleton(surname)
+    end = ""
+    for tail in _ALT_END:
+        if sk.endswith(tail):
+            sk, end = sk[: -len(tail)], tail
+            break
+    combos = [""]
+    for ch in sk:
+        opts = _ALT.get(ch, [ch])
+        combos = [c + o for c in combos for o in opts]
+        if len(combos) > limit * 20:
+            combos = combos[: limit * 20]
+    tails = _ALT_END.get(end, [""])
+    out = []
+    for c in combos:
+        for t in tails:
+            out.append((c + t).capitalize())
+    seen, uniq = set(), []
+    for v in out:  # найпоширеніші спочатку: сортуємо за кількістю «екзотичних» символів
+        if v not in seen:
+            seen.add(v)
+            uniq.append(v)
+    uniq.sort(key=lambda v: sum(ch in "śóúżćńł" for ch in v) + (len(v) - len(surname)) * 0.01)
+    return uniq[:limit] if limit < 10 else uniq[: max(limit, 10)]

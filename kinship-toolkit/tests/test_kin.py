@@ -33,6 +33,12 @@ class Names(unittest.TestCase):
             self.assertEqual(names.skeleton(v), base, v)
         self.assertEqual(names.skeleton("Ковальський"), names.skeleton("Kowalski"))
 
+    def test_query_variants_cover_index_spellings(self):
+        v = names.query_variants("Борисів", limit=400)
+        for want in ("Borysów", "Boryszow", "Borisiv", "Borysiw"):
+            self.assertIn(want, v)
+        self.assertTrue(all(names.skeleton(x) == names.skeleton("Борисів") for x in v))
+
     def test_different_surnames_stay_apart(self):
         self.assertLess(names.similarity("Борисів", "Мельник"), 0.6)
 
