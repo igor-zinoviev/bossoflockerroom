@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.kin-cache/
+secrets/
+*storage*.json
+fs_state.json
+*.ged
+case/
