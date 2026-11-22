@@ -1,0 +1,47 @@
+# LG webOS Telemetry, ACR & Ad Domains Blocklist
+# Sources: community research, Pi-hole logs, webosbrew, privacysmarthome.com
+# Format: used in /etc/hosts (127.0.0.1 <domain>) and DNS blocklists
+# Last updated: 2024-2025 research synthesis
+#
+# ─── ACR (Automatic Content Recognition) ──────────────────────────────────────
+lgsmartad.com
+lgtvsdp.com
+lgappstv.com
+lgsmartplatform.com
+nextlgsdp.com
+app.lgwebostv.com
+lgtvcommon.com
+alphonso.tv
+acr.lgsmartad.com
+# ─── Advertising ──────────────────────────────────────────────────────────────
+ads.lgtvsdp.com
+ad.lgtvsdp.com
+lgads.lge.com
+sdk-ads.lgappstv.com
+# ─── Analytics & diagnostics ──────────────────────────────────────────────────
+analytics.lgappstv.com
+report.lgappstv.com
+log.lgappstv.com
+diagnostics.lge.com
+evt.lgappstv.com
+ymsng.lgappstv.com
+cdp.cloud.unity3d.com
+# ─── LG Smart Platform / identity ────────────────────────────────────────────
+kic.lge.com
+kic2.lge.com
+lgtvonline.lge.com
+ngfts.lge.com
+smartclip.tv
+# ─── OTA firmware update servers (block to prevent auto-update) ───────────────
+# WARNING: also disables manual update — set "Allow Auto Updates=OFF" in settings first
+snscu.lge.com
+snu.lge.com
+su.lge.com
+fota2.lge.com
+fota.lge.com
+otas.lge.com
+# ─── SAFE TO KEEP (do NOT block — breaks core features) ──────────────────────
+# us.lgappstv.com          → app store
+# *.lge.com (general)      → breaks login, settings sync
+# time.lge.com             → NTP clock
+# swfota.lge.com           → manual update (you want this accessible)
