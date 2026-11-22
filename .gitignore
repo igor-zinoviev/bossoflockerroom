@@ -1,0 +1,20 @@
+# TV credentials (never commit)
+tv-upgrade/.env
+tv-upgrade/tv-backup/
+tv-backup/
+
+# Kinship case data (private family info)
+kinship-case/
+**/scratchpad/kinship-case/
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db

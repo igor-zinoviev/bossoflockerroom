@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # ─── TV Connection Config ─────────────────────────────────────────────────────
-TV_IP="192.168.0.158"
-TV_PORT="9922"
-TV_USER="prisoner"
-TV_PASS="5D6431"          # Developer Mode passphrase shown on TV screen
+TV_IP="${TV_IP:-192.168.0.158}"
+TV_PORT="${TV_PORT:-9922}"
+TV_USER="${TV_USER:-prisoner}"
+# TV_PASS: set in .env (never commit) — shown on TV screen in Developer Mode
+TV_PASS="${TV_PASS:?'Set TV_PASS in .env or export TV_PASS=<passphrase from TV screen>'}"
 TV_MODEL="LG 50UN73006LA"
 TV_WEBOS="5.0"
 
